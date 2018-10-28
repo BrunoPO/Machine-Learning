@@ -50,7 +50,7 @@ public class GameStateManager : MonoBehaviour
         Instance = this;
 
         //Load gui scene
-        //SceneManager.LoadScene("GUI", LoadSceneMode.Additive);
+        SceneManager.LoadScene("GUI", LoadSceneMode.Additive);
 
         //Load track
         SceneManager.LoadScene(TrackName, LoadSceneMode.Additive);

@@ -79,9 +79,10 @@ namespace UnityStandardAssets.Vehicles.Car
             if (!UseUserInput)
             {
                 //Get readings from sensors
-                double[] sensorOutput = new double[sensors.Length];
+                double[] sensorOutput = new double[sensors.Length*2];
                 for (int i = 0; i < sensors.Length; i++) {
-                    sensorOutput[i] = sensors[i].Output;
+                    sensorOutput[i] = sensors[i].Output.x;
+                    sensorOutput[i+1] = sensors[i].Output.y;
                     //print(sensorOutput[i]);
                 }
 

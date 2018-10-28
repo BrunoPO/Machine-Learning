@@ -7345,9 +7345,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18901d425a8f8b4e8cc018e66b83dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToSense:
+  firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
+  secondLayerToSense:
+    serializedVersion: 2
+    m_Bits: 2048
   Cross: {fileID: 0}
 --- !u!114 &114211621692185318
 MonoBehaviour:
@@ -7360,9 +7363,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18901d425a8f8b4e8cc018e66b83dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToSense:
+  firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
+  secondLayerToSense:
+    serializedVersion: 2
+    m_Bits: 2048
   Cross: {fileID: 0}
 --- !u!114 &114381677200281634
 MonoBehaviour:
@@ -7375,9 +7381,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18901d425a8f8b4e8cc018e66b83dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToSense:
+  firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
+  secondLayerToSense:
+    serializedVersion: 2
+    m_Bits: 2048
   Cross: {fileID: 0}
 --- !u!114 &114478858178012260
 MonoBehaviour:
@@ -7390,9 +7399,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18901d425a8f8b4e8cc018e66b83dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToSense:
+  firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
+  secondLayerToSense:
+    serializedVersion: 2
+    m_Bits: 2048
   Cross: {fileID: 0}
 --- !u!114 &114750333883649876
 MonoBehaviour:
@@ -7405,9 +7417,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18901d425a8f8b4e8cc018e66b83dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToSense:
+  firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
+  secondLayerToSense:
+    serializedVersion: 2
+    m_Bits: 2048
   Cross: {fileID: 0}
 --- !u!114 &114957964166540206
 MonoBehaviour:
@@ -7420,9 +7435,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18901d425a8f8b4e8cc018e66b83dc0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  LayerToSense:
+  firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1
+    m_Bits: 1024
+  secondLayerToSense:
+    serializedVersion: 2
+    m_Bits: 2048
   Cross: {fileID: 0}
 --- !u!135 &135933721166340300
 SphereCollider:

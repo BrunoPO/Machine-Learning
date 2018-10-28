@@ -10,7 +10,10 @@ namespace UnityStandardAssets.Vehicles.Car
         #region Members
         // The layer this sensor will be reacting to, to be set in Unity editor.
         [SerializeField]
-        private LayerMask LayerToSense;
+        private LayerMask firstLayerToSense;
+        //The crosshair of the sensor, to be set in Unity editor.
+        [SerializeField]
+        private LayerMask secondLayerToSense;
         //The crosshair of the sensor, to be set in Unity editor.
         [SerializeField]
         private SpriteRenderer Cross;
@@ -22,7 +25,7 @@ namespace UnityStandardAssets.Vehicles.Car
         /// <summary>
         /// The current sensor readings in percent of maximum distance.
         /// </summary>
-        public float Output
+        public Vector2 Output
         {
             get;
             private set;
@@ -47,7 +50,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
             //Send raycast into direction of sensor
             RaycastHit hit;
-            Physics.Raycast(this.transform.parent.transform.position, direction, out hit, MAX_DIST, LayerToSense, QueryTriggerInteraction.UseGlobal);
+            Physics.Raycast(this.transform.parent.transform.position, direction, out hit, MAX_DIST, firstLayerToSense, QueryTriggerInteraction.UseGlobal);
             Debug.DrawRay(this.transform.parent.transform.position, direction * MAX_DIST, Color.yellow);
             //Check distance
             if (hit.collider == null)
@@ -55,7 +58,21 @@ namespace UnityStandardAssets.Vehicles.Car
             else if (hit.distance < MIN_DIST)
                 hit.distance = MIN_DIST;
 
-            this.Output = hit.distance; //transform to percent of max distance
+            float firstOutput = hit.distance;
+
+            //Send raycast into direction of sensor
+            RaycastHit hit2;
+            Physics.Raycast(this.transform.parent.transform.position, direction, out hit2, MAX_DIST, secondLayerToSense, QueryTriggerInteraction.UseGlobal);
+            Debug.DrawRay(this.transform.parent.transform.position, direction * MAX_DIST, Color.yellow);
+            //Check distance
+            if (hit2.collider == null)
+                hit2.distance = MAX_DIST;
+            else if (hit2.distance < MIN_DIST)
+                hit2.distance = MIN_DIST;
+
+            float secondOutput = hit2.distance;
+
+            Output = new Vector2(firstOutput,secondOutput);
             //Cross.transform.position = (Vector2)this.transform.position + direction * hit.distance; //Set position of visual cross to current reading
         }
         private void OnDrawGizmos()
