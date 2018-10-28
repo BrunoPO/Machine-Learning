@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private SpriteRenderer Cross;
 
         // Max and min readings
-        private const float MAX_DIST = 80f;
+        private const float MAX_DIST = 10f;
         private const float MIN_DIST = 0.01f;
 
         /// <summary>
@@ -63,7 +63,7 @@ namespace UnityStandardAssets.Vehicles.Car
             //Send raycast into direction of sensor
             RaycastHit hit2;
             Physics.Raycast(this.transform.parent.transform.position, direction, out hit2, MAX_DIST, secondLayerToSense, QueryTriggerInteraction.UseGlobal);
-            Debug.DrawRay(this.transform.parent.transform.position, direction * MAX_DIST, Color.yellow);
+            Debug.DrawRay(this.transform.parent.transform.position, direction * MAX_DIST, Color.blue);
             //Check distance
             if (hit2.collider == null)
                 hit2.distance = MAX_DIST;

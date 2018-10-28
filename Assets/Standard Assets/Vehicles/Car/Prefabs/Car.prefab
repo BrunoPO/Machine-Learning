@@ -2262,6 +2262,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 96468c245ae8e0d4f8f1c7a7b8b0542e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  useSensorObstacle: 1
   UseUserInput: 0
   SpriteRenderer: {fileID: 0}
 --- !u!114 &11400024
@@ -7347,10 +7348,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   secondLayerToSense:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
   Cross: {fileID: 0}
 --- !u!114 &114211621692185318
 MonoBehaviour:
@@ -7365,10 +7366,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   secondLayerToSense:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
   Cross: {fileID: 0}
 --- !u!114 &114381677200281634
 MonoBehaviour:
@@ -7383,10 +7384,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   secondLayerToSense:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
   Cross: {fileID: 0}
 --- !u!114 &114478858178012260
 MonoBehaviour:
@@ -7401,10 +7402,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   secondLayerToSense:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
   Cross: {fileID: 0}
 --- !u!114 &114750333883649876
 MonoBehaviour:
@@ -7419,10 +7420,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   secondLayerToSense:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
   Cross: {fileID: 0}
 --- !u!114 &114957964166540206
 MonoBehaviour:
@@ -7437,10 +7438,10 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   firstLayerToSense:
     serializedVersion: 2
-    m_Bits: 1024
+    m_Bits: 2048
   secondLayerToSense:
     serializedVersion: 2
-    m_Bits: 2048
+    m_Bits: 1024
   Cross: {fileID: 0}
 --- !u!135 &135933721166340300
 SphereCollider:

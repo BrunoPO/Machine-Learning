@@ -203,6 +203,8 @@ private Quaternion[] m_WheelMeshLocalRotations;
 
         private void CapSpeed()
         {
+            if (m_Rigidbody == null || m_Rigidbody.velocity == null)
+                return;
             float speed = m_Rigidbody.velocity.magnitude;
             switch (m_SpeedType)
             {

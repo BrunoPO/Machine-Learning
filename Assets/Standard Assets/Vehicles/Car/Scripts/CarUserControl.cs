@@ -23,6 +23,8 @@ namespace UnityStandardAssets.Vehicles.Car
 
         private const float MAX_CHECKPOINT_DELAY = 7;
 
+        public Boolean useSensorObstacle = false;
+
         public Boolean UseUserInput = false;
         public Agent Agent
         {
@@ -79,16 +81,33 @@ namespace UnityStandardAssets.Vehicles.Car
             if (!UseUserInput)
             {
                 //Get readings from sensors
-                double[] sensorOutput = new double[sensors.Length*2];
-                for (int i = 0; i < sensors.Length; i++) {
+                double[] sensorOutput = null;
+
+                //print(useSensorObstacle);
+                if (useSensorObstacle) { 
+                    sensorOutput = new double[sensors.Length*2];
+                }
+                else
+                {
+                    sensorOutput = new double[sensors.Length];
+                }
+
+                for (int i = 0; i < sensors.Length; i++)
+                {
                     sensorOutput[i] = sensors[i].Output.x;
-                    sensorOutput[i+1] = sensors[i].Output.y;
+                    print(sensorOutput[i]);
+                    if (useSensorObstacle)
+                    {
+                        sensorOutput[sensors.Length+i] = sensors[i].Output.y;
+                    }
                     //print(sensorOutput[i]);
                 }
 
                 double[] controlInputs = Agent.FNN.ProcessInputs(sensorOutput);
                 if (controlInputs != null) { 
                     float[] controlInputsFloat = Array.ConvertAll(controlInputs, x => (float)x);
+                    controlInputsFloat[0] = (controlInputsFloat[0] * 2) - 1;
+                    controlInputsFloat[1] = (controlInputsFloat[1] * 2) - 1;
                     m_Car.Move(controlInputsFloat[0], controlInputsFloat[1], controlInputsFloat[1], 0f);
                 }
 
@@ -134,7 +153,7 @@ namespace UnityStandardAssets.Vehicles.Car
         
         public void OnTriggerEnter(Collider other)
         {
-            print(other.gameObject.tag);
+            //print(other.gameObject.tag);
             if (other.gameObject.tag == "RoadLimit")
             {
                 /*CarUserControl controller = other.gameObject.GetComponent<CarUserControl>();
