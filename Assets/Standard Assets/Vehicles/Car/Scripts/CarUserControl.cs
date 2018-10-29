@@ -21,7 +21,8 @@ namespace UnityStandardAssets.Vehicles.Car
         }
         #endregion
 
-        private const float MAX_CHECKPOINT_DELAY = 7;
+        public Boolean Commented = false;
+        private const float MAX_CHECKPOINT_DELAY = 8;
 
         public Boolean useSensorObstacle = false;
 
@@ -95,7 +96,7 @@ namespace UnityStandardAssets.Vehicles.Car
                 for (int i = 0; i < sensors.Length; i++)
                 {
                     sensorOutput[i] = sensors[i].Output.x;
-                    print(sensorOutput[i]);
+                    //print(sensorOutput[i]);
                     if (useSensorObstacle)
                     {
                         sensorOutput[sensors.Length+i] = sensors[i].Output.y;
@@ -106,8 +107,8 @@ namespace UnityStandardAssets.Vehicles.Car
                 double[] controlInputs = Agent.FNN.ProcessInputs(sensorOutput);
                 if (controlInputs != null) { 
                     float[] controlInputsFloat = Array.ConvertAll(controlInputs, x => (float)x);
-                    controlInputsFloat[0] = (controlInputsFloat[0] * 2) - 1;
-                    controlInputsFloat[1] = (controlInputsFloat[1] * 2) - 1;
+                    //controlInputsFloat[0] = (controlInputsFloat[0] * 2) - 1;
+                    //controlInputsFloat[1] = (controlInputsFloat[1] * 2) - 1;
                     m_Car.Move(controlInputsFloat[0], controlInputsFloat[1], controlInputsFloat[1], 0f);
                 }
 
@@ -128,7 +129,7 @@ namespace UnityStandardAssets.Vehicles.Car
         // Makes this car die (making it unmovable and stops the Agent from calculating the controls for the car).
         private void Die()
         {
-            print("You Died");
+            if(Commented) print("You Died");
 
             this.enabled = false;
             //m_Car.Stop();
@@ -144,7 +145,7 @@ namespace UnityStandardAssets.Vehicles.Car
         public void CheckpointCaptured()//(String chkPointName
         {
             timeSinceLastCheckpoint = 0;
-            print("Taked CheckPoint");
+            if(Commented)  print("Taked CheckPoint");
             /*if (lastChkPointName != chkPointName) {
                 lastChkPointName = chkPointName;
             }*/

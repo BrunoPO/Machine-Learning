@@ -35,3 +35,6 @@ sysinfo.txt
 
 #Visual Studio
 .vscode/*
+
+#log
+Evaluation - *.txt

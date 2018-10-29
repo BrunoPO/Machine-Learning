@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private SpriteRenderer Cross;
 
         // Max and min readings
-        private const float MAX_DIST = 10f;
+        private const float MAX_DIST = 40f;
         private const float MIN_DIST = 0.01f;
 
         /// <summary>
@@ -58,7 +58,7 @@ namespace UnityStandardAssets.Vehicles.Car
             else if (hit.distance < MIN_DIST)
                 hit.distance = MIN_DIST;
 
-            float firstOutput = hit.distance;
+            float firstOutput = hit.distance/MAX_DIST;
 
             //Send raycast into direction of sensor
             RaycastHit hit2;
@@ -70,7 +70,7 @@ namespace UnityStandardAssets.Vehicles.Car
             else if (hit2.distance < MIN_DIST)
                 hit2.distance = MIN_DIST;
 
-            float secondOutput = hit2.distance;
+            float secondOutput = hit2.distance/MAX_DIST;
 
             Output = new Vector2(firstOutput,secondOutput);
             //Cross.transform.position = (Vector2)this.transform.position + direction * hit.distance; //Set position of visual cross to current reading

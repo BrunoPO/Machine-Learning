@@ -195,12 +195,14 @@ public class EvolutionManager : MonoBehaviour
     {
         AllAgentsDied -= ga.EvaluationFinished;
 
-        RestartAlgorithm(5.0f);
+        RestartAlgorithm(3*60.0f);
     }
 
     // Restarts the algorithm after a specific wait time second wait
     private void RestartAlgorithm(float wait)
     {
+        //
+        print("Restart Algorithm");
         Invoke("StartEvolution", wait);
     }
 

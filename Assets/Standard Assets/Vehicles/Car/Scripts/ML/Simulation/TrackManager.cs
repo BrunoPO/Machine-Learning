@@ -279,7 +279,6 @@ public class TrackManager : MonoBehaviour
 
         //Calculate distance to next checkpoint
         float checkPointDistance = Vector3.Distance(car.transform.position, checkpoints[curCheckpointIndex].transform.position);
-        checkPointDistance = (checkPointDistance / 10);
         //print(checkPointDistance);
         //Check if checkpoint can be captured
         if (checkPointDistance <= checkpoints[curCheckpointIndex].CaptureRadius)
