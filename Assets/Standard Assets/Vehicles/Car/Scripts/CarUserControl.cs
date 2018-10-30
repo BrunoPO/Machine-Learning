@@ -26,6 +26,8 @@ namespace UnityStandardAssets.Vehicles.Car
 
         public Boolean useSensorObstacle = false;
 
+        public int sensorToBeRead = 6;
+
         public Boolean UseUserInput = false;
         public Agent Agent
         {
@@ -53,6 +55,7 @@ namespace UnityStandardAssets.Vehicles.Car
             m_Car = GetComponent<CarController>();
             SpriteRenderer = GetComponent<SpriteRenderer>();
             sensors = GetComponentsInChildren<Sensor>();
+            sensorToBeRead = (sensorToBeRead > sensors.Length) ? sensors.Length : sensorToBeRead;
         }
 
 
@@ -86,20 +89,21 @@ namespace UnityStandardAssets.Vehicles.Car
 
                 //print(useSensorObstacle);
                 if (useSensorObstacle) { 
-                    sensorOutput = new double[sensors.Length*2];
+                    sensorOutput = new double[sensorToBeRead * 2];
                 }
                 else
                 {
-                    sensorOutput = new double[sensors.Length];
+                    sensorOutput = new double[sensorToBeRead];
                 }
 
-                for (int i = 0; i < sensors.Length; i++)
+                for (int i = 0; i < sensorToBeRead; i++)
                 {
                     sensorOutput[i] = sensors[i].Output.x;
+                    if(Commented) print(sensors[i].Output.x);
                     //print(sensorOutput[i]);
                     if (useSensorObstacle)
                     {
-                        sensorOutput[sensors.Length+i] = sensors[i].Output.y;
+                        sensorOutput[sensorToBeRead+ i] = sensors[i].Output.y;
                     }
                     //print(sensorOutput[i]);
                 }

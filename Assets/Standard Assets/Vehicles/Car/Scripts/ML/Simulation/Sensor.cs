@@ -73,6 +73,7 @@ namespace UnityStandardAssets.Vehicles.Car
             float secondOutput = hit2.distance/MAX_DIST;
 
             Output = new Vector2(firstOutput,secondOutput);
+            print(this.name+" "+firstOutput +" "+ secondOutput);
             //Cross.transform.position = (Vector2)this.transform.position + direction * hit.distance; //Set position of visual cross to current reading
         }
         private void OnDrawGizmos()
