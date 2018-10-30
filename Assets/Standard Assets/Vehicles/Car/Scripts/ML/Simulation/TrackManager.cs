@@ -6,6 +6,7 @@ using System;
 using UnityEngine;
 using System.Collections.Generic;
 using UnityStandardAssets.Vehicles.Car;
+using UnityStandardAssets.Cameras;
 #endregion
 
 /// <summary>
@@ -19,6 +20,8 @@ public class TrackManager : MonoBehaviour
         get;
         private set;
     }
+
+    GameObject CarCameraRig;
 
     // Sprites for visualising best and second best cars. To be set in Unity Editor.
     /*[SerializeField]
@@ -77,6 +80,17 @@ public class TrackManager : MonoBehaviour
                 if (value != null)
                     value.SpriteRenderer.sprite = BestCarSprite;
                     */
+
+                //print(Camera.main.name);
+                if(CarCameraRig == null)
+                {
+                    CarCameraRig = GameObject.Find("CarCameraRig");
+                }
+                if (CarCameraRig != null && value != null)
+                {
+                    CarCameraRig.GetComponent<AutoCam>().SetTarget(value.gameObject.transform);
+                }
+                
 
                 //Set previous best to be second best now
                 CarUserControl previousBest = bestCar;
