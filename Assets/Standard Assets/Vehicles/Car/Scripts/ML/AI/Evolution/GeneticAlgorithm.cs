@@ -30,11 +30,11 @@ public class GeneticAlgorithm
     /// <summary>
     /// Default probability of a parameter being mutated.
     /// </summary>
-    public const float DefMutationProb = 0.3f;
+    public const float DefMutationProb = 0.4f;
     /// <summary>
     /// Default amount by which parameters may be mutated.
     /// </summary>
-    public const float DefMutationAmount = 2.0f;
+    public const float DefMutationAmount = 3.0f;
     /// <summary>
     /// Default percent of genotypes in a new population that are mutated.
     /// </summary>
@@ -293,9 +293,23 @@ public class GeneticAlgorithm
     public static List<Genotype> DefaultSelectionOperator(List<Genotype> currentPopulation)
     {
         List<Genotype> intermediatePopulation = new List<Genotype>();
-        intermediatePopulation.Add(currentPopulation[0]);
-        intermediatePopulation.Add(currentPopulation[1]);
-        intermediatePopulation.Add(currentPopulation[2]);
+        if (TrackManager.Instance != null)
+        {
+            if (TrackManager.Instance.BestCarAll.Value != null)
+                intermediatePopulation.Add(TrackManager.Instance.BestCarAll.Value);
+
+            if (TrackManager.Instance.SecondBestCar != null)
+                intermediatePopulation.Add(TrackManager.Instance.SecondBestCar.Agent.Genotype);
+            else if (TrackManager.Instance.BestCar != null)
+                intermediatePopulation.Add(TrackManager.Instance.BestCar.Agent.Genotype);
+        }
+
+        if(intermediatePopulation.Count < 3)
+            intermediatePopulation.Add(currentPopulation[0]);
+        if (intermediatePopulation.Count < 3)
+            intermediatePopulation.Add(currentPopulation[1]);
+        if (intermediatePopulation.Count < 3)
+            intermediatePopulation.Add(currentPopulation[2]);
 
         return intermediatePopulation;
     }
@@ -384,6 +398,19 @@ public class GeneticAlgorithm
                 genotype[i] += (float)(randomizer.NextDouble() * (mutationAmount * 2) - mutationAmount);
             }    
         } 
+    }
+
+    public static void MutateGenotypeFromBaseGenotype(Genotype genotypeBase, Genotype genotype, float mutationProb, float mutationAmount)
+    {
+        for (int i = 0; i < genotype.ParameterCount; i++)
+        {
+            genotype[i] = genotypeBase[i];
+            if (randomizer.NextDouble() < mutationProb)
+            {
+                //Mutate by random amount in range [-mutationAmount, mutationAmoun]
+                genotype[i] += (float)(randomizer.NextDouble() * (mutationAmount * 2) - mutationAmount);
+            }
+        }
     }
     #endregion
     #endregion

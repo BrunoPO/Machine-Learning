@@ -19,7 +19,7 @@ namespace UnityStandardAssets.Vehicles.Car
         private SpriteRenderer Cross;
 
         // Max and min readings
-        private const float MAX_DIST = 40f;
+        private const float MAX_DIST = 80f;
         private const float MIN_DIST = 0.01f;
 
         /// <summary>

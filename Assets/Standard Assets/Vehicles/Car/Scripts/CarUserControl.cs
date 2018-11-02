@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using UnityEngine;
 using UnityStandardAssets.CrossPlatformInput;
 
@@ -48,9 +49,11 @@ namespace UnityStandardAssets.Vehicles.Car
         public SpriteRenderer SpriteRenderer;
         private Sensor[] sensors;
         private float timeSinceLastCheckpoint;
+        private Rigidbody m_Rigidbody;
 
         private void Awake()
         {
+            m_Rigidbody = this.GetComponent<Rigidbody>();
             // get the car controller
             m_Car = GetComponent<CarController>();
             SpriteRenderer = GetComponent<SpriteRenderer>();
@@ -75,6 +78,7 @@ namespace UnityStandardAssets.Vehicles.Car
         // Unity method for normal update
         void Update()
         {
+            //print(m_Rigidbody.velocity);
             timeSinceLastCheckpoint += Time.deltaTime;
         }
 
@@ -89,28 +93,45 @@ namespace UnityStandardAssets.Vehicles.Car
 
                 //print(useSensorObstacle);
                 if (useSensorObstacle) { 
-                    sensorOutput = new double[sensorToBeRead * 2];
+                    sensorOutput = new double[sensorToBeRead * 2 + 3];
                 }
                 else
                 {
-                    sensorOutput = new double[sensorToBeRead];
+                    sensorOutput = new double[sensorToBeRead + 3];
                 }
+
+                float x = m_Rigidbody.velocity.normalized.x;
+                x =(x<30)?x/60:0.5f;
+                x = (m_Rigidbody.velocity.x < 0) ?x:x+0.5f;
+                float y = m_Rigidbody.velocity.normalized.y;
+                y = (y < 30) ? y / 60 : 0.5f;
+                y = (m_Rigidbody.velocity.y < 0) ? y : y + 0.5f;
+                float z = m_Rigidbody.velocity.normalized.z;
+                z = (z < 30) ? z / 60 : 0.5f;
+                z = (m_Rigidbody.velocity.z < 0) ? z : z + 0.5f;
+
+                sensorOutput[sensorOutput.Length - 3] = x;
+                sensorOutput[sensorOutput.Length - 2] = y;
+                sensorOutput[sensorOutput.Length-1] = z;
 
                 for (int i = 0; i < sensorToBeRead; i++)
                 {
                     sensorOutput[i] = sensors[i].Output.x;
-                    if(Commented) print(sensors[i].Output.x);
+                    //if(Commented) print(sensors[i].Output.x);
                     //print(sensorOutput[i]);
                     if (useSensorObstacle)
                     {
                         sensorOutput[sensorToBeRead+ i] = sensors[i].Output.y;
                     }
+
                     //print(sensorOutput[i]);
                 }
 
+
+
                 double[] controlInputs = Agent.FNN.ProcessInputs(sensorOutput);
                 if (controlInputs != null) { 
-                    float[] controlInputsFloat = Array.ConvertAll(controlInputs, x => (float)x);
+                    float[] controlInputsFloat = Array.ConvertAll(controlInputs, input => (float)input);
                     //controlInputsFloat[0] = (controlInputsFloat[0] * 2) - 1;
                     //controlInputsFloat[1] = (controlInputsFloat[1] * 2) - 1;
                     m_Car.Move(controlInputsFloat[0], controlInputsFloat[1], controlInputsFloat[1], 0f);
@@ -133,7 +154,9 @@ namespace UnityStandardAssets.Vehicles.Car
         // Makes this car die (making it unmovable and stops the Agent from calculating the controls for the car).
         private void Die()
         {
-            if(Commented) print("You Died");
+
+            TrackManager.Instance.BestCarAll = new KeyValuePair<float, Genotype>(Agent.Genotype.Evaluation, Agent.Genotype);
+            //if(Commented) print("You Died");
 
             this.enabled = false;
             //m_Car.Stop();
@@ -149,7 +172,7 @@ namespace UnityStandardAssets.Vehicles.Car
         public void CheckpointCaptured()//(String chkPointName
         {
             timeSinceLastCheckpoint = 0;
-            if(Commented)  print("Taked CheckPoint");
+            //if(Commented) print("Taked CheckPoint");
             /*if (lastChkPointName != chkPointName) {
                 lastChkPointName = chkPointName;
             }*/

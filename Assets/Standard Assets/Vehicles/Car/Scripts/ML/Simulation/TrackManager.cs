@@ -21,6 +21,8 @@ public class TrackManager : MonoBehaviour
         private set;
     }
 
+    public Boolean AllowTheBestToComment = true;
+
     GameObject CarCameraRig;
 
     // Sprites for visualising best and second best cars. To be set in Unity Editor.
@@ -63,10 +65,25 @@ public class TrackManager : MonoBehaviour
     }
 
     #region Best and Second best
+    private KeyValuePair<float, Genotype> bestCarOfAll ;
     private CarUserControl bestCar = null;
     /// <summary>
     /// The current best car (furthest in the track).
     /// </summary>
+    /// 
+    public KeyValuePair<float, Genotype> BestCarAll
+    {
+        get { return bestCarOfAll; }
+        set
+        {
+            if(value.Key > bestCarOfAll.Key)
+            {
+                print(value.Key);
+                bestCarOfAll = value;
+            }
+        }
+    }
+
     public CarUserControl BestCar
     {
         get { return bestCar; }
@@ -81,20 +98,38 @@ public class TrackManager : MonoBehaviour
                     value.SpriteRenderer.sprite = BestCarSprite;
                     */
 
-                //print(Camera.main.name);
-                if(CarCameraRig == null)
-                {
-                    CarCameraRig = GameObject.Find("CarCameraRig");
-                }
-                if (CarCameraRig != null && value != null)
-                {
-                    CarCameraRig.GetComponent<AutoCam>().SetTarget(value.gameObject.transform);
-                }
+                
+                
                 
 
                 //Set previous best to be second best now
                 CarUserControl previousBest = bestCar;
                 bestCar = value;
+                if(value != null)
+                {
+                    BestCarAll = new KeyValuePair<float, Genotype>(bestCar.Agent.Genotype.Evaluation, bestCar.Agent.Genotype);
+                }
+                //print(Camera.main.name);
+                if (CarCameraRig == null)
+                {
+                    CarCameraRig = GameObject.Find("CarCameraRig");
+                }
+                if (bestCar != null)
+                {
+                    if (CarCameraRig != null)
+                    {
+                        CarCameraRig.GetComponent<AutoCam>().SetTarget(bestCar.gameObject.transform);
+                    }
+                    if (AllowTheBestToComment)
+                    {
+                        bestCar.Commented = true;
+                        if (previousBest != null)
+                        {
+                            previousBest.Commented = false;
+                        }
+                    }
+                }
+
                 if (BestCarChanged != null)
                     BestCarChanged(bestCar);
 
@@ -293,9 +328,13 @@ public class TrackManager : MonoBehaviour
 
         //Calculate distance to next checkpoint
         float checkPointDistance = Vector3.Distance(car.transform.position, checkpoints[curCheckpointIndex].transform.position);
-        //print(checkPointDistance);
+        //checkPointDistance /= 10;
+        //if (AllowTheBestToComment && car == bestCar) print(checkPointDistance);
         //Check if checkpoint can be captured
-        if (checkPointDistance <= checkpoints[curCheckpointIndex].CaptureRadius)
+
+        //for (int i = 0; i < checkpoints.Length; i++){print(checkpoints[i].name);}
+
+        if (checkPointDistance <= checkpoints[curCheckpointIndex-1].CaptureRadius)
         {
             curCheckpointIndex++;
             car.CheckpointCaptured(); //Inform car that it captured a checkpoint

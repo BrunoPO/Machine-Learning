@@ -213,8 +213,17 @@ public class EvolutionManager : MonoBehaviour
         agents.Clear();
         AgentsAliveCount = 0;
 
+
+
+        /*Genotype Filegene = Genotype.LoadFromFile("\\Genotype - Finished as 2.txt");
+        if(Filegene != null)
+            agents.Add(new Agent(Filegene, MathHelper.SoftSignFunction, FNNTopology));
+        */
+
         foreach (Genotype genotype in currentPopulation)
+        {
             agents.Add(new Agent(genotype, MathHelper.SoftSignFunction, FNNTopology));
+        }
 
         TrackManager.Instance.SetCarAmount(agents.Count);
         IEnumerator<CarUserControl> carsEnum = TrackManager.Instance.GetCarEnumerator();//CarController
@@ -277,6 +286,7 @@ public class EvolutionManager : MonoBehaviour
     {
         //Check arguments
         if (intermediatePopulation.Count < 2)
+            //return intermediatePopulation;
             throw new System.ArgumentException("The intermediate population has to be at least of size 2 for this operator.");
 
         List<Genotype> newPopulation = new List<Genotype>();
@@ -293,9 +303,9 @@ public class EvolutionManager : MonoBehaviour
             {
                 randomIndex2 = randomizer.Next(0, intermediatePopulation.Count);
             } while (randomIndex2 == randomIndex1);
-
+            
             Genotype offspring1, offspring2;
-            GeneticAlgorithm.CompleteCrossover(intermediatePopulation[randomIndex1], intermediatePopulation[randomIndex2], 
+            GeneticAlgorithm.CompleteCrossover(newPopulation[0], newPopulation[1], 
                 GeneticAlgorithm.DefCrossSwapProb, out offspring1, out offspring2);
 
             newPopulation.Add(offspring1);
@@ -309,10 +319,23 @@ public class EvolutionManager : MonoBehaviour
     // Mutates all members of the new population with the default probability, while leaving the first 2 genotypes in the list untouched.
     private void MutateAllButBestTwo(List<Genotype> newPopulation)
     {
+        
+        
         for (int i = 2; i < newPopulation.Count; i++)
         {
             if (randomizer.NextDouble() < GeneticAlgorithm.DefMutationPerc)
-                GeneticAlgorithm.MutateGenotype(newPopulation[i], GeneticAlgorithm.DefMutationProb, GeneticAlgorithm.DefMutationAmount);
+            {
+                if (i % 2 == 0)
+                {
+                    GeneticAlgorithm.MutateGenotypeFromBaseGenotype(newPopulation[0], newPopulation[i], GeneticAlgorithm.DefMutationProb, GeneticAlgorithm.DefMutationAmount);
+                }
+                else
+                {
+                    GeneticAlgorithm.MutateGenotypeFromBaseGenotype(newPopulation[1], newPopulation[i], GeneticAlgorithm.DefMutationProb, GeneticAlgorithm.DefMutationAmount);
+                }
+                
+                
+            }
         }
     }
 
