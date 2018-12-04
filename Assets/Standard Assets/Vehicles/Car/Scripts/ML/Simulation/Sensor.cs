@@ -20,7 +20,7 @@ namespace UnityStandardAssets.Vehicles.Car
 
         // Max and min readings
         private const float MAX_DIST = 80f;
-        private const float MIN_DIST = 0.01f;
+        private const float MIN_DIST = 0.50f;
 
         /// <summary>
         /// The current sensor readings in percent of maximum distance.
@@ -57,6 +57,8 @@ namespace UnityStandardAssets.Vehicles.Car
                 hit.distance = MAX_DIST;
             else if (hit.distance < MIN_DIST)
                 hit.distance = MIN_DIST;
+            else if (hit.distance > MAX_DIST)
+                hit.distance = MAX_DIST;
 
             float firstOutput = hit.distance/MAX_DIST;
 
@@ -69,6 +71,8 @@ namespace UnityStandardAssets.Vehicles.Car
                 hit2.distance = MAX_DIST;
             else if (hit2.distance < MIN_DIST)
                 hit2.distance = MIN_DIST;
+            else if (hit2.distance > MAX_DIST)
+                hit2.distance = MAX_DIST;
 
             float secondOutput = hit2.distance/MAX_DIST;
 

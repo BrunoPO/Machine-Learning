@@ -127,13 +127,21 @@ namespace UnityStandardAssets.Vehicles.Car
                     //print(sensorOutput[i]);
                 }
 
-
+                
 
                 double[] controlInputs = Agent.FNN.ProcessInputs(sensorOutput);
                 if (controlInputs != null) { 
                     float[] controlInputsFloat = Array.ConvertAll(controlInputs, input => (float)input);
                     //controlInputsFloat[0] = (controlInputsFloat[0] * 2) - 1;
                     //controlInputsFloat[1] = (controlInputsFloat[1] * 2) - 1;
+                    if (sensorOutput[0] < 0.40f && controlInputsFloat[0] < 0)
+                    {
+                        controlInputsFloat[0] *= -1.5f;
+                    }
+                    if (sensorOutput[2] < 0.40f && controlInputsFloat[0] > 1)
+                    {
+                        controlInputsFloat[0] *= -1.5f;
+                    }
                     m_Car.Move(controlInputsFloat[0], controlInputsFloat[1], controlInputsFloat[1], 0f);
                 }
 
